@@ -1,0 +1,116 @@
+// Moteur commun à toutes les pages FUN30.
+// - <body data-niveau="N"> : numéro de l'énigme de la page
+// - <body data-intro> : la page commence par une intro (popup + bouton OK) qui masque l'énigme
+// - la progression est mémorisée dans le navigateur ; une page dont le niveau
+//   n'est pas débloqué renvoie vers index.html.
+(() => {
+  const CLE_NIVEAU = 'fun30_niveau';
+  const CLE_OK = 'fun30_ok_';
+  const niveau = Number(document.body.dataset.niveau);
+
+  const lire = (k) => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+  const ecrire = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
+  const effacer = () => { try { localStorage.clear(); } catch (e) {} };
+
+  // index.html?reset : repart de zéro (utile pour tester)
+  if (new URLSearchParams(location.search).has('reset')) {
+    effacer();
+    location.replace(location.pathname);
+    return;
+  }
+
+  const debloque = () => Number(lire(CLE_NIVEAU)) || 1;
+  if (niveau > debloque()) {
+    location.replace('index.html');
+    return;
+  }
+
+  const $ = (id) => document.getElementById(id);
+
+  // ---------- Hash simple (cyrb53) : les réponses ne sont pas en clair dans le JSON ----------
+  const hash = (str, seed = 0) => {
+    let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
+    for (let i = 0; i < str.length; i++) {
+      const ch = str.charCodeAt(i);
+      h1 = Math.imul(h1 ^ ch, 2654435761);
+      h2 = Math.imul(h2 ^ ch, 1597334677);
+    }
+    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+    return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(16);
+  };
+
+  // Minuscules, sans accents, ponctuation et espaces unifiés
+  const norm = (s) => s.toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+
+  // ---------- Fenêtres modales ----------
+  const ouvrir = (el) => { el.hidden = false; };
+  const fermer = (el) => { el.hidden = true; };
+
+  document.querySelectorAll('.overlay [data-fermer]').forEach((b) =>
+    b.addEventListener('click', () => fermer(b.closest('.overlay'))));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') document.querySelectorAll('.overlay').forEach(fermer);
+  });
+
+  // Fenêtre d'aide : cliquer à côté de la fenêtre la ferme
+  const aide = $('aide');
+  if (aide) {
+    aide.addEventListener('click', (e) => { if (e.target === aide) fermer(aide); });
+  }
+
+  // ---------- Intro (popup + OK) ----------
+  const aIntro = 'intro' in document.body.dataset;
+  const btnAide = $('btn-aide');
+
+  const reveler = () => {
+    document.querySelectorAll('[data-avant-ok]').forEach((el) => { el.hidden = true; });
+    document.querySelectorAll('[data-apres-ok]').forEach((el) => { el.hidden = false; });
+    if (btnAide) btnAide.hidden = false;
+  };
+
+  if (aIntro && lire(CLE_OK + niveau) !== '1') {
+    const popup = $('popup');
+    if (popup) ouvrir(popup);
+    $('ok').addEventListener('click', () => {
+      ecrire(CLE_OK + niveau, '1');
+      reveler();
+    });
+  } else {
+    reveler();
+  }
+
+  if (btnAide && aide) btnAide.addEventListener('click', () => ouvrir(aide));
+
+  // ---------- Énigme ----------
+  const form = $('reponse');
+  if (!form) return;
+  const erreur = $('erreur');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    erreur.classList.remove('visible');
+
+    let config;
+    try {
+      const r = await fetch('enigmes.json', { cache: 'no-store' });
+      config = (await r.json())[niveau];
+    } catch (err) {
+      erreur.textContent = "Impossible de charger enigmes.json. En local, lancez un petit serveur web au lieu d'ouvrir le fichier directement.";
+      erreur.classList.add('visible');
+      return;
+    }
+
+    const saisie = norm(form.reponse.value);
+    if (saisie && config.reponses.includes(hash(saisie))) {
+      ecrire(CLE_NIVEAU, Math.max(debloque(), niveau + 1));
+      location.href = config.suivant;
+    } else {
+      erreur.textContent = "Ce n'est pas la bonne réponse. Relisez les indices ou demandez de l'aide avec le bouton « ? ».";
+      erreur.classList.add('visible');
+    }
+  });
+})();

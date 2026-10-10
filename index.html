@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FUN30</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-niveau="1" data-intro>
+
+  <header class="main">
+    <div class="wrap">
+      <div class="logo">FUN30</div>
+      <button class="btn-aide" id="btn-aide" type="button" aria-label="Aide" hidden>?</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap">
+      <h1>Procédure FUN30 en cours</h1>
+      <p>Votre colis a changé de destination.</p>
+    </div>
+  </section>
+
+  <main>
+    <div class="carte" data-avant-ok>
+      <p>Veuillez vous déplacer vers la nouvelle destination et cliquer sur OK une fois sur place.</p>
+      <button class="btn" id="ok" type="button">OK</button>
+    </div>
+
+    <div class="carte" data-apres-ok hidden>
+      <h2>Indices</h2>
+      <ul class="indices">
+        <li><span class="date">1672</span><span class="mot">épaisseur</span></li>
+        <li><span class="date">juin 1673</span><span class="mot">pays siègé</span></li>
+        <li><span class="date">13 avril 2016</span><span class="mot">SIF privé</span></li>
+        <li><span class="date">16 octobre 2018</span><span class="mot">QRCode caché</span></li>
+        <li><span class="date">juin 2022</span><span class="mot"><a href="https://maps.app.goo.gl/hM9V7pMRCcUFQj4b7" target="_blank" rel="noopener">https://maps.app.goo.gl/hM9V7pMRCcUFQj4b7</a>, couleurs</span></li>
+      </ul>
+    </div>
+
+    <div class="carte" data-apres-ok hidden>
+      <form id="reponse" autocomplete="off" novalidate>
+        <label for="champ">Quel est le prochain lieu ?</label>
+        <div class="reponse-ligne">
+          <input type="text" id="champ" name="reponse" placeholder="Votre réponse">
+          <button class="btn" type="submit">Valider</button>
+        </div>
+        <div class="erreur" id="erreur" role="alert"></div>
+      </form>
+    </div>
+  </main>
+
+  <footer>© 2026 FUN30</footer>
+
+  <!-- Popup affiché par défaut tant que l'on n'a pas cliqué sur OK -->
+  <div class="overlay" id="popup" hidden>
+    <div class="modale" role="dialog" aria-modal="true" aria-labelledby="popup-titre">
+      <button class="croix" type="button" data-fermer aria-label="Fermer">&times;</button>
+      <h2 id="popup-titre">Information importante</h2>
+      <p>Trop grand nombre de trentenaires détectés, Colissimou ne peut pas prendre en charge autant de Séniors. Procédure FUN30 engagée, le colis est déplacé à un lieu mystère qui assurera une bonne soirée.</p>
+    </div>
+  </div>
+
+  <!-- Aide (bouton « ? ») -->
+  <div class="overlay" id="aide" hidden>
+    <div class="modale" role="dialog" aria-modal="true" aria-labelledby="aide-titre">
+      <button class="croix" type="button" data-fermer aria-label="Fermer">&times;</button>
+      <h2 id="aide-titre">Aide</h2>
+      <p>Chaque date permet de retomber sur un mot qui, tous ensemble, permettent de deviner le mot République, le prochain lieu.</p>
+      <ol>
+        <li>Avec ces indices, il faut comprendre que la date correspond à celle du début de construction de l’arche et que l’épaisseur de l’œuvre est de 5m (lien avec la 5e REPUBLIQUE).</li>
+        <li>Les personnes doivent trouver la pancarte informative sur la porte Saint-Denis qui indique qu’en juin 1673 un siège a eu lieu à Maastricht, ville de Hollande (Président de la REPUBLIQUE français).</li>
+        <li>13 avril 2016 : nouvelle loi de lutte contre le système prostitutionnel en France (la porte Saint-Denis étant un lieu emblématique de la prostitution à Paris), puis si l’on fait un lien avec les mots clés, on peut trouver RAIE et PUBLIC.</li>
+        <li>Un QRCode caché renvoie sur la vidéo de Mélenchon qui crie “La République c’est moi !”, la date correspond au jour où il a évoqué cette phrase désormais mythique.</li>
+        <li>En ouvrant le lien Google Maps et en changeant la date de publication du Google Street View à juin 2022, on peut apercevoir sur l’arc une sorte de fanion tricolore à cause de la lumière (bleu, blanc, rouge → couleurs de la REPUBLIQUE française).</li>
+      </ol>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
