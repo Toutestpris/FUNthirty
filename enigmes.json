@@ -84,5 +84,16 @@
       "1a618dd4cc7e96"
     ],
     "suivant": "suivi3.html"
+  },
+  "4": {
+    "suivant": "suivi4.html"
+  },
+  "5": {
+    "reponses": [
+      "10340559b386cc",
+      "a17ae43d850e8",
+      "7d74a7a088f13",
+      "1b4578da674ad4"
+    ]
   }
 }

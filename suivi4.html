@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FUN30</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // Accès réservé : retour à l'accueil si l'énigme précédente n'est pas résolue
+    try {
+      if ((Number(localStorage.getItem('fun30_niveau')) || 1) < 5) location.replace('index.html');
+    } catch (e) { location.replace('index.html'); }
+  </script>
+</head>
+<body data-niveau="5">
+
+  <header class="main">
+    <div class="wrap">
+      <div class="logo">FUN30</div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap">
+      <h1>Réveiller les morts à suivre À LA LETTRE !</h1>
+      <p>(Pour 12 belles personnes)</p>
+    </div>
+  </section>
+
+  <main>
+    <div class="carte">
+      <p>Demander à <strong>Richard</strong> où est caché <strong>le</strong> café <strong>noir</strong>. Avec un peu de chance, cette fois ci, il ne vous sn<strong>obe</strong>ra pas et arrêtera de lire ce putain de “Mein <strong>Kampf</strong>”. Vous pouvez toujours essayer de l’amadouer avec son plat préféré mais c’est pas trop la saison du hachis <strong>parmentier</strong>… Tentez d’aller voir le pasteur mais pas sûr que ce soit un <strong>saint</strong>, contrairement à <strong>Ambroise</strong>, doux comme une framboise.</p>
+      <p>Demandez-lui la recette pour réveiller les <strong>maur</strong>, lui au moins, il saura vous donner l’ingrédient magique.</p>
+      <p>Ah et si vous croisez sur votre <strong>passage Guilhem</strong>, saluez le et dites lui d’aller voir son voisin <strong>Maurice Gardette</strong>.</p>
+    </div>
+
+    <div class="carte">
+      <form id="reponse" autocomplete="off" novalidate>
+        <label for="champ">Quel est le nom du lieu que vous avez face à vous ?</label>
+        <div class="reponse-ligne">
+          <input type="text" id="champ" name="reponse" placeholder="Votre réponse">
+          <button class="btn" type="submit">Valider</button>
+        </div>
+        <div class="erreur" id="erreur" role="alert"></div>
+      </form>
+    </div>
+
+    <div class="carte" id="fin" hidden>
+      <p class="fin">Entrez et asseyez vous sur un banc</p>
+    </div>
+  </main>
+
+  <footer>© 2026 FUN30</footer>
+
+  <script src="game.js"></script>
+</body>
+</html>

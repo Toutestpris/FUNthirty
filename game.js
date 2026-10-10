@@ -98,7 +98,6 @@
   // Une énigme simple a "reponses" ; une énigme à étapes (photos) a "etapes" :
   // [{ image, invite, reponses }], l'étape en cours étant mémorisée dans le navigateur.
   const form = $('reponse');
-  if (!form) return;
   const erreur = $('erreur');
   const CLE_ETAPE = 'fun30_etape_' + niveau;
 
@@ -110,6 +109,54 @@
     }
     return config;
   };
+
+  // ---------- Quiz à choix : les mauvaises réponses (data-photo) affichent leur photo ;
+  // la bonne (data-bonne) ne se débloque qu'une fois toutes les mauvaises essayées ----------
+  const quiz = $('quiz');
+  if (quiz) {
+    const CLE_QUIZ = 'fun30_quiz_' + niveau;
+    const vues = (lire(CLE_QUIZ) || '').split(',').filter(Boolean);
+    const fausses = quiz.querySelectorAll('[data-photo]');
+    const bonne = quiz.querySelector('[data-bonne]');
+    const galerie = $('galerie');
+
+    const ajouterPhoto = (src) => {
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = 'Mauvaise réponse';
+      galerie.appendChild(img);
+      return img;
+    };
+    const maj = () => { bonne.disabled = vues.length < fausses.length; };
+
+    vues.forEach(ajouterPhoto);
+    maj();
+    fausses.forEach((b) => b.addEventListener('click', () => {
+      const src = b.dataset.photo;
+      if (vues.includes(src)) return;
+      vues.push(src);
+      ecrire(CLE_QUIZ, vues.join(','));
+      ajouterPhoto(src).scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      maj();
+    }));
+    bonne.addEventListener('click', async () => {
+      if (bonne.disabled) return;
+      try {
+        const cfg = await charger();
+        ecrire(CLE_NIVEAU, Math.max(debloque(), niveau + 1));
+        location.href = cfg.suivant;
+      } catch (err) {
+        alert("Impossible de charger enigmes.json. En local, lancez un petit serveur web au lieu d'ouvrir le fichier directement.");
+      }
+    });
+  }
+
+  if (!form) return;
+
+  // Dernière énigme : un bloc #fin remplace le formulaire une fois l'énigme résolue
+  const fin = $('fin');
+  const afficherFin = () => { form.closest('.carte').hidden = true; fin.hidden = false; };
+  if (fin && debloque() > niveau) afficherFin();
 
   const etapeCourante = () => Number(lire(CLE_ETAPE)) || 0;
 
@@ -157,6 +204,7 @@
       return;
     }
     ecrire(CLE_NIVEAU, Math.max(debloque(), niveau + 1));
-    location.href = cfg.suivant;
+    if (fin) afficherFin();
+    else location.href = cfg.suivant;
   });
 })();

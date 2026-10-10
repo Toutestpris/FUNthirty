@@ -146,6 +146,43 @@ main { padding: 32px 24px 56px; }
   letter-spacing: 1px;
 }
 
+/* ---------- Quiz à choix ---------- */
+.choix { list-style: none; margin: 0; padding: 0; }
+.choix li { margin-bottom: 12px; }
+.choix-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 14px 16px;
+  font-size: 17px;
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--bleu);
+  background: #fff;
+  border: 2px solid var(--bleu);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.choix-btn:hover:not(:disabled) { background: var(--jaune); }
+.choix-btn:disabled {
+  color: var(--gris);
+  border-color: var(--bordure);
+  background: #f4f6f9;
+  cursor: not-allowed;
+}
+.galerie { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.galerie:not(:empty) { margin-top: 12px; }
+.galerie img {
+  max-width: 100%;
+  max-height: 45vh;
+  border-radius: 8px;
+  border: 1px solid var(--bordure);
+}
+
+/* ---------- Message final ---------- */
+.carte p.fin { font-size: 22px; font-weight: 800; color: var(--bleu); text-align: center; }
+.carte strong { color: var(--bleu); }
+
 /* ---------- Audio ---------- */
 audio { display: block; width: 100%; margin-bottom: 16px; }
 audio:last-child { margin-bottom: 0; }
