@@ -29,7 +29,17 @@
 
   <main>
     <div class="carte">
-      <p>La suite arrive bientôt…</p>
+      <p class="compteur" id="compteur"></p>
+      <img class="photo" id="photo" alt="Photo à identifier">
+      <div class="invite" id="invite"></div>
+      <form id="reponse" autocomplete="off" novalidate>
+        <label for="champ">Nom de la rue</label>
+        <div class="reponse-ligne">
+          <input type="text" id="champ" name="reponse" placeholder="Votre réponse">
+          <button class="btn" type="submit">Valider</button>
+        </div>
+        <div class="erreur" id="erreur" role="alert"></div>
+      </form>
     </div>
   </main>
 

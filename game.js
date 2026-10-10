@@ -86,31 +86,68 @@
   if (btnAide && aide) btnAide.addEventListener('click', () => ouvrir(aide));
 
   // ---------- Énigme ----------
+  // Une énigme simple a "reponses" ; une énigme à étapes (photos) a "etapes" :
+  // [{ image, invite, reponses }], l'étape en cours étant mémorisée dans le navigateur.
   const form = $('reponse');
   if (!form) return;
   const erreur = $('erreur');
+  const CLE_ETAPE = 'fun30_etape_' + niveau;
+
+  let config;
+  const charger = async () => {
+    if (!config) {
+      const r = await fetch('enigmes.json', { cache: 'no-store' });
+      config = (await r.json())[niveau];
+    }
+    return config;
+  };
+
+  const etapeCourante = () => Number(lire(CLE_ETAPE)) || 0;
+
+  const afficherEtape = (cfg) => {
+    const etape = cfg.etapes[etapeCourante()];
+    $('photo').src = etape.image;
+    $('invite').textContent = etape.invite;
+    $('compteur').textContent = 'Photo ' + (etapeCourante() + 1) + ' sur ' + cfg.etapes.length;
+    form.reponse.value = '';
+    form.reponse.focus();
+  };
+
+  if ($('photo')) {
+    charger().then((cfg) => { if (cfg.etapes) afficherEtape(cfg); }).catch(() => {});
+  }
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     erreur.classList.remove('visible');
 
-    let config;
+    let cfg;
     try {
-      const r = await fetch('enigmes.json', { cache: 'no-store' });
-      config = (await r.json())[niveau];
+      cfg = await charger();
     } catch (err) {
       erreur.textContent = "Impossible de charger enigmes.json. En local, lancez un petit serveur web au lieu d'ouvrir le fichier directement.";
       erreur.classList.add('visible');
       return;
     }
 
+    const etapes = cfg.etapes;
+    const attendues = etapes ? etapes[etapeCourante()].reponses : cfg.reponses;
     const saisie = norm(form.reponse.value);
-    if (saisie && config.reponses.includes(hash(saisie))) {
-      ecrire(CLE_NIVEAU, Math.max(debloque(), niveau + 1));
-      location.href = config.suivant;
-    } else {
-      erreur.textContent = "Ce n'est pas la bonne réponse. Relisez les indices ou demandez de l'aide avec le bouton « ? ».";
+
+    if (!saisie || !attendues.includes(hash(saisie))) {
+      erreur.textContent = etapes
+        ? "Ce n'est pas la bonne rue. Regardez bien la photo et allez la chercher sur place."
+        : "Ce n'est pas la bonne réponse. Relisez les indices ou demandez de l'aide avec le bouton « ? ».";
       erreur.classList.add('visible');
+      return;
     }
+
+    if (etapes && etapeCourante() + 1 < etapes.length) {
+      ecrire(CLE_ETAPE, etapeCourante() + 1);
+      afficherEtape(cfg);
+      return;
+    }
+    ecrire(CLE_NIVEAU, Math.max(debloque(), niveau + 1));
+    location.href = cfg.suivant;
   });
 })();

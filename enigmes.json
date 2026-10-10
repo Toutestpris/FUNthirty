@@ -1,6 +1,75 @@
 {
   "1": {
-    "reponses": ["91a2bb88a31be", "18f72e4af0b1e8", "7f29080b102c"],
+    "reponses": [
+      "91a2bb88a31be",
+      "18f72e4af0b1e8",
+      "7f29080b102c"
+    ],
     "suivant": "suivi1.html"
+  },
+  "2": {
+    "etapes": [
+      {
+        "image": "image1.png",
+        "invite": "BOULEVARD ?",
+        "reponses": [
+          "15da0217dc180d",
+          "6ce52b511b2b8",
+          "d13b4d2320988",
+          "1ac7013d62a91b",
+          "cf01c1d480db",
+          "18be88075e76e9"
+        ]
+      },
+      {
+        "image": "image2.png",
+        "invite": "RUE ?",
+        "reponses": [
+          "f890ed6f8a906",
+          "65e1490c0e8b0",
+          "1f187cb2cdadfa",
+          "1e986b75fd0d33",
+          "1226ff78e4a44",
+          "1a153d274df104"
+        ]
+      },
+      {
+        "image": "image3.png",
+        "invite": "RUE ?",
+        "reponses": [
+          "1d6cc267983000",
+          "220725a1b26a6",
+          "3043ad1c8ce1e",
+          "6398cceb0a17b",
+          "14e23345e605ad",
+          "98af3ef17b373"
+        ]
+      },
+      {
+        "image": "image4.png",
+        "invite": "RUE ?",
+        "reponses": [
+          "9180acdb54eda",
+          "f1167ec3cdb63",
+          "4c8ba3057595",
+          "14578e8ece4848",
+          "1bbf4efdb113a",
+          "c4360ed9af924"
+        ]
+      },
+      {
+        "image": "image5.png",
+        "invite": "BD ?",
+        "reponses": [
+          "19f356e94c152b",
+          "7e4e76ed590b1",
+          "cccb2330846e0",
+          "1828d754d93075",
+          "159b695f7bf5fe",
+          "1285f8930f7d89"
+        ]
+      }
+    ],
+    "suivant": "suivi2.html"
   }
 }
