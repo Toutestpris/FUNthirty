@@ -17,6 +17,7 @@
   <header class="main">
     <div class="wrap">
       <div class="logo">FUN30</div>
+      <button class="btn-aide" id="btn-aide" type="button" aria-label="Aide" hidden>?</button>
     </div>
   </header>
 
@@ -29,11 +30,34 @@
 
   <main>
     <div class="carte">
-      <p>La suite arrive bientôt…</p>
+      <audio controls preload="metadata" src="Audio1.m4a"></audio>
+      <audio controls preload="metadata" src="Audio2.m4a"></audio>
+    </div>
+
+    <div class="carte">
+      <form id="reponse" autocomplete="off" novalidate>
+        <label for="champ">Quel est le prochain lieu ?</label>
+        <div class="reponse-ligne">
+          <input type="text" id="champ" name="reponse" placeholder="Votre réponse">
+          <button class="btn" type="submit">Valider</button>
+        </div>
+        <div class="erreur" id="erreur" role="alert"></div>
+      </form>
     </div>
   </main>
 
   <footer>© 2026 FUN30</footer>
+
+  <!-- Aide (bouton « ? ») -->
+  <div class="overlay" id="aide" hidden>
+    <div class="modale" role="dialog" aria-modal="true" aria-labelledby="aide-titre">
+      <button class="croix" type="button" data-fermer aria-label="Fermer">&times;</button>
+      <h2 id="aide-titre">Aide</h2>
+      <p>Alors on ne reconnait plus les sons à la mode chez les djeuns ? les artistes et les 16 mesures donnent des indications sur un lieu proche d'ici #GANG</p>
+      <button class="btn" type="button" data-reveler="indice2">Un indice de plus</button>
+      <p id="indice2" hidden>Bâtiment des années 1860 à la façade d'inspiration chinoise. Lieu de recueillement et de culture</p>
+    </div>
+  </div>
 
   <script src="game.js"></script>
 </body>

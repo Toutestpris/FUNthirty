@@ -71,5 +71,18 @@
       }
     ],
     "suivant": "suivi2.html"
+  },
+  "3": {
+    "reponses": [
+      "13aebacc97d8fe",
+      "10fcacce123910",
+      "f6752ca27c757",
+      "2e8b77d56d921",
+      "14d7158375eceb",
+      "1c465b851a1964",
+      "78ff3a6f31eea",
+      "1a618dd4cc7e96"
+    ],
+    "suivant": "suivi3.html"
   }
 }

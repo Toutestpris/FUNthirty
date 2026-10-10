@@ -85,6 +85,15 @@
 
   if (btnAide && aide) btnAide.addEventListener('click', () => ouvrir(aide));
 
+  // Indice caché : un bouton data-reveler="id" affiche l'élément id (mémorisé)
+  document.querySelectorAll('[data-reveler]').forEach((b) => {
+    const cible = $(b.dataset.reveler);
+    const cle = 'fun30_indice_' + niveau + '_' + cible.id;
+    const montrer = () => { cible.hidden = false; b.hidden = true; };
+    if (lire(cle) === '1') montrer();
+    b.addEventListener('click', () => { ecrire(cle, '1'); montrer(); });
+  });
+
   // ---------- Énigme ----------
   // Une énigme simple a "reponses" ; une énigme à étapes (photos) a "etapes" :
   // [{ image, invite, reponses }], l'étape en cours étant mémorisée dans le navigateur.

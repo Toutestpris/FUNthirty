@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FUN30</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // Accès réservé : retour à l'accueil si l'énigme précédente n'est pas résolue
+    try {
+      if ((Number(localStorage.getItem('fun30_niveau')) || 1) < 4) location.replace('index.html');
+    } catch (e) { location.replace('index.html'); }
+  </script>
+</head>
+<body data-niveau="4">
+
+  <header class="main">
+    <div class="wrap">
+      <div class="logo">FUN30</div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap">
+      <h1>Bienvenue au Bataclan</h1>
+      <p>Bien joué, vous avez trouvé le lieu mystère.</p>
+    </div>
+  </section>
+
+  <main>
+    <div class="carte">
+      <p>La suite arrive bientôt…</p>
+    </div>
+  </main>
+
+  <footer>© 2026 FUN30</footer>
+
+  <script src="game.js"></script>
+</body>
+</html>

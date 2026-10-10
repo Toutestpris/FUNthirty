@@ -146,6 +146,10 @@ main { padding: 32px 24px 56px; }
   letter-spacing: 1px;
 }
 
+/* ---------- Audio ---------- */
+audio { display: block; width: 100%; margin-bottom: 16px; }
+audio:last-child { margin-bottom: 0; }
+
 /* ---------- Réponse ---------- */
 label { display: block; font-weight: 600; font-size: 14px; margin: 0 0 6px; }
 input[type="text"] {
@@ -200,6 +204,7 @@ input[type="text"]:focus {
 }
 .modale h2 { margin: 0 40px 14px 0; font-size: 21px; color: var(--bleu); }
 .modale p { margin: 0 0 12px; font-size: 16px; }
+.modale .btn { margin-bottom: 12px; }
 .modale ol { margin: 0; padding-left: 22px; }
 .modale li { margin-bottom: 12px; }
 .croix {
