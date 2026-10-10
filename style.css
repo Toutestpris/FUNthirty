@@ -150,6 +150,10 @@ main { padding: 32px 24px 56px; }
 audio { display: block; width: 100%; margin-bottom: 16px; }
 audio:last-child { margin-bottom: 0; }
 
+/* ---------- Artistes ---------- */
+#artistes input { margin-bottom: 12px; }
+#artistes .btn { margin-bottom: 4px; }
+
 /* ---------- Réponse ---------- */
 label { display: block; font-weight: 600; font-size: 14px; margin: 0 0 6px; }
 input[type="text"] {

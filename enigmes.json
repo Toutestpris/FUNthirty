@@ -83,6 +83,14 @@
       "78ff3a6f31eea",
       "1a618dd4cc7e96"
     ],
-    "suivant": "suivi3.html"
+    "suivant": "suivi3.html",
+    "artistes": [
+      [
+        "f100f33a3c4c6"
+      ],
+      [
+        "9204ff6382c37"
+      ]
+    ]
   }
 }

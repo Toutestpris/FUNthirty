@@ -12,16 +12,23 @@
     } catch (e) { location.replace('index.html'); }
   </script>
 </head>
-<body data-niveau="3">
+<body data-niveau="3" data-intro>
 
   <header class="main">
     <div class="wrap">
       <div class="logo">FUN30</div>
-      <button class="btn-aide" id="btn-aide" type="button" aria-label="Aide" hidden>?</button>
+      <button class="btn-aide" id="btn-aide" type="button" aria-label="Aide">?</button>
     </div>
   </header>
 
-  <section class="hero">
+  <section class="hero" data-avant-ok>
+    <div class="wrap">
+      <h1>Test de musique</h1>
+      <p>Pour voir si vous connaissez vos classiques et si vous êtes prêts pour la suite.</p>
+    </div>
+  </section>
+
+  <section class="hero" data-apres-ok hidden>
     <div class="wrap">
       <h1>Boulevard Voltaire</h1>
       <p>Bien joué, vous avez trouvé toutes les rues.</p>
@@ -29,12 +36,26 @@
   </section>
 
   <main>
-    <div class="carte">
+    <div class="carte" data-avant-ok>
+      <audio controls preload="metadata" src="meddley.m4a"></audio>
+    </div>
+
+    <div class="carte" data-avant-ok>
+      <form id="artistes" autocomplete="off" novalidate>
+        <label for="artiste1">Quels artistes entendez-vous derrière ?</label>
+        <input type="text" id="artiste1" name="artiste1" placeholder="Premier artiste">
+        <input type="text" id="artiste2" name="artiste2" placeholder="Deuxième artiste">
+        <button class="btn" type="submit">Valider</button>
+        <div class="erreur" id="erreur-artistes" role="alert"></div>
+      </form>
+    </div>
+
+    <div class="carte" data-apres-ok hidden>
       <audio controls preload="metadata" src="Audio1.m4a"></audio>
       <audio controls preload="metadata" src="Audio2.m4a"></audio>
     </div>
 
-    <div class="carte">
+    <div class="carte" data-apres-ok hidden>
       <form id="reponse" autocomplete="off" novalidate>
         <label for="champ">Quel est le prochain lieu ?</label>
         <div class="reponse-ligne">
@@ -53,9 +74,12 @@
     <div class="modale" role="dialog" aria-modal="true" aria-labelledby="aide-titre">
       <button class="croix" type="button" data-fermer aria-label="Fermer">&times;</button>
       <h2 id="aide-titre">Aide</h2>
-      <p>Alors on ne reconnait plus les sons à la mode chez les djeuns ? les artistes et les 16 mesures donnent des indications sur un lieu proche d'ici #GANG</p>
-      <button class="btn" type="button" data-reveler="indice2">Un indice de plus</button>
-      <p id="indice2" hidden>Bâtiment des années 1860 à la façade d'inspiration chinoise. Lieu de recueillement et de culture</p>
+      <p data-avant-ok>Le mwaka et l'albinos</p>
+      <div data-apres-ok hidden>
+        <p>Alors on ne reconnait plus les sons à la mode chez les djeuns ? les artistes et les 16 mesures donnent des indications sur un lieu proche d'ici #GANG</p>
+        <button class="btn" type="button" data-reveler="indice2">Un indice de plus</button>
+        <p id="indice2" hidden>Bâtiment des années 1860 à la façade d'inspiration chinoise. Lieu de recueillement et de culture</p>
+      </div>
     </div>
   </div>
 
