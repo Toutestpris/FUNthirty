@@ -75,8 +75,7 @@
   if (aIntro && lire(CLE_OK + niveau) !== '1') {
     const popup = $('popup');
     if (popup) ouvrir(popup);
-    const ok = $('ok');
-    if (ok) ok.addEventListener('click', () => {
+    $('ok').addEventListener('click', () => {
       ecrire(CLE_OK + niveau, '1');
       reveler();
     });
@@ -94,36 +93,6 @@
     if (lire(cle) === '1') montrer();
     b.addEventListener('click', () => { ecrire(cle, '1'); montrer(); });
   });
-
-  // ---------- Préliminaire : noms des artistes, un champ par nom (hashes dans "artistes") ----------
-  const formArtistes = $('artistes');
-  if (formArtistes) {
-    const erreurArtistes = $('erreur-artistes');
-    formArtistes.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      erreurArtistes.classList.remove('visible');
-      let attendues;
-      try {
-        const r = await fetch('enigmes.json', { cache: 'no-store' });
-        attendues = (await r.json())[niveau].artistes;
-      } catch (err) {
-        erreurArtistes.textContent = "Impossible de charger enigmes.json. En local, lancez un petit serveur web au lieu d'ouvrir le fichier directement.";
-        erreurArtistes.classList.add('visible');
-        return;
-      }
-      const bons = attendues.every((hashes, i) => {
-        const saisie = norm(formArtistes.elements['artiste' + (i + 1)].value);
-        return saisie && hashes.includes(hash(saisie));
-      });
-      if (bons) {
-        ecrire(CLE_OK + niveau, '1');
-        reveler();
-      } else {
-        erreurArtistes.textContent = "Ce ne sont pas les bons artistes. Écoutez bien et relisez l'indice.";
-        erreurArtistes.classList.add('visible');
-      }
-    });
-  }
 
   // ---------- Énigme ----------
   // Une énigme simple a "reponses" ; une énigme à étapes (photos) a "etapes" :
