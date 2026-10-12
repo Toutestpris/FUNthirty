@@ -182,6 +182,7 @@ main { padding: 32px 24px 56px; }
 /* ---------- Message final ---------- */
 .carte p.fin { font-size: 22px; font-weight: 800; color: var(--bleu); text-align: center; }
 .carte strong { color: var(--bleu); }
+.carte.centre { text-align: center; }
 
 /* ---------- Audio ---------- */
 audio { display: block; width: 100%; margin-bottom: 16px; }

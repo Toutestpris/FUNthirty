@@ -158,13 +158,48 @@
   const afficherFin = () => { form.closest('.carte').hidden = true; fin.hidden = false; };
   if (fin && debloque() > niveau) afficherFin();
 
+  // Pause chronométrée dans #fin : un premier bouton affiche la photo, puis un second bouton
+  // (menant à la page suivante) n'apparaît qu'après data-delai secondes, même si on recharge la page.
+  // La pause compte pour un niveau : la page suivante est au niveau + 2.
+  const pause = $('pause');
+  if (pause) {
+    const CLE_PAUSE = 'fun30_pause_' + niveau;
+    const btnPause = $('btn-pause');
+    const btnSuite = $('btn-suite');
+    const demarrer = (debut) => {
+      btnPause.hidden = true;
+      pause.hidden = false;
+      const reste = debut + Number(pause.dataset.delai) * 1000 - Date.now();
+      if (reste <= 0) btnSuite.hidden = false;
+      else setTimeout(() => { btnSuite.hidden = false; }, reste);
+    };
+    if (debloque() >= niveau + 2) demarrer(0);
+    else if (Number(lire(CLE_PAUSE))) demarrer(Number(lire(CLE_PAUSE)));
+    btnPause.addEventListener('click', () => {
+      const debut = Date.now();
+      ecrire(CLE_PAUSE, debut);
+      demarrer(debut);
+    });
+    btnSuite.addEventListener('click', async () => {
+      try {
+        const cfg = await charger();
+        ecrire(CLE_NIVEAU, Math.max(debloque(), niveau + 2));
+        location.href = cfg.suivant;
+      } catch (err) {
+        alert("Impossible de charger enigmes.json. En local, lancez un petit serveur web au lieu d'ouvrir le fichier directement.");
+      }
+    });
+  }
+
   const etapeCourante = () => Number(lire(CLE_ETAPE)) || 0;
 
   const afficherEtape = (cfg) => {
     const etape = cfg.etapes[etapeCourante()];
-    $('photo').src = etape.image;
-    $('invite').textContent = etape.invite;
-    $('compteur').textContent = 'Photo ' + (etapeCourante() + 1) + ' sur ' + cfg.etapes.length;
+    $('photo').hidden = !etape.image;
+    if (etape.image) $('photo').src = etape.image;
+    $('invite').hidden = !etape.invite;
+    $('invite').textContent = etape.invite || '';
+    if ($('compteur')) $('compteur').textContent = 'Photo ' + (etapeCourante() + 1) + ' sur ' + cfg.etapes.length;
     form.reponse.value = '';
     form.reponse.focus();
   };
@@ -192,7 +227,7 @@
 
     if (!saisie || !attendues.includes(hash(saisie))) {
       erreur.textContent = etapes
-        ? "Ce n'est pas la bonne rue. Regardez bien la photo et allez la chercher sur place."
+        ? cfg.erreur || "Ce n'est pas la bonne rue. Regardez bien la photo et allez la chercher sur place."
         : "Ce n'est pas la bonne réponse. Relisez les indices ou demandez de l'aide avec le bouton « ? ».";
       erreur.classList.add('visible');
       return;

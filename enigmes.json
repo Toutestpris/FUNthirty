@@ -94,6 +94,26 @@
       "a17ae43d850e8",
       "7d74a7a088f13",
       "1b4578da674ad4"
+    ],
+    "suivant": "suivi5.html"
+  },
+  "7": {
+    "erreur": "Ce n'est pas la bonne réponse. Réfléchissez encore !",
+    "etapes": [
+      {
+        "invite": "QUEL EST LE CODE POST FUN ?",
+        "reponses": [
+          "def4bdc5cd1b8",
+          "151b6bfaa83998"
+        ]
+      },
+      {
+        "image": "rebus_belvedere.png",
+        "reponses": [
+          "1a2c4c3f1c666b",
+          "108397f2b13ec5"
+        ]
+      }
     ]
   }
 }
