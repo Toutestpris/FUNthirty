@@ -184,6 +184,28 @@ main { padding: 32px 24px 56px; }
 .carte strong { color: var(--bleu); }
 .carte.centre { text-align: center; }
 
+/* ---------- Carte de Paris ---------- */
+main > p.compteur { text-align: center; }
+.plan-defile { max-width: 1000px; margin: 0 auto; overflow-x: auto; }
+.plan { position: relative; min-width: 800px; container-type: inline-size; }
+.plan > img { display: block; width: 100%; border: 1px solid var(--bordure); border-radius: 8px; }
+.plan input.lieu {
+  position: absolute;
+  width: 8.4%;
+  height: 3.1%;
+  padding: 0 2px;
+  text-align: center;
+  font-size: 1.25cqw;
+  font-weight: 700;
+  color: var(--bleu);
+  background: #fff;
+  border: 1.5px solid var(--bleu);
+  border-radius: 4px;
+}
+.plan input.lieu:focus { z-index: 2; box-shadow: 0 0 0 3px rgba(255, 210, 0, 0.8); }
+.plan input.lieu.trouve { color: #1b5e20; background: #d9f2dd; border-color: #2e7d32; cursor: pointer; }
+.modale .photo { margin-bottom: 16px; }
+
 /* ---------- Audio ---------- */
 audio { display: block; width: 100%; margin-bottom: 16px; }
 audio:last-child { margin-bottom: 0; }

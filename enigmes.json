@@ -114,6 +114,154 @@
           "108397f2b13ec5"
         ]
       }
+    ],
+    "suivant": "suivi6.html"
+  },
+  "8": {
+    "reponses": [
+      "19e4ae378e70f9",
+      "1f173b6978cd4b",
+      "27597b0617785"
+    ],
+    "suivant": "suivi7.html"
+  },
+  "9": {
+    "lieux": [
+      {
+        "photo": "enigme_carte/photo1.jpg",
+        "reponses": [
+          "1c0a5b5a77a227",
+          "141d245034a6f9",
+          "464dc28642324",
+          "1887b69d37b4c0",
+          "a83f49281ab83",
+          "155a26aad8d76e",
+          "641deb4f3c6e6"
+        ]
+      },
+      {
+        "reponses": [
+          "12b317c94f8035",
+          "aeb3ec17b1621"
+        ]
+      },
+      {
+        "reponses": [
+          "127c9fb464270",
+          "b76959bec88b0",
+          "15f0937f666304",
+          "1ad8c3d7156ad7",
+          "9ee59ecb6f659",
+          "1f52768da66e67",
+          "377f8c4fe8f2f"
+        ]
+      },
+      {
+        "reponses": [
+          "123722c089f776",
+          "8d0d8c2b2e470",
+          "1ae440e657da7f",
+          "799607e2ae871"
+        ]
+      },
+      {
+        "photo": "enigme_carte/photo6.jpg",
+        "reponses": [
+          "12fc31b1fca91c",
+          "1b79200ba6a675",
+          "11472aeb77d86e"
+        ]
+      },
+      {
+        "photo": "enigme_carte/photo2.webp",
+        "reponses": [
+          "f29b281cfef05",
+          "1a17b8e7aa419f",
+          "3da2e340f513a",
+          "46695b9f3b4f7",
+          "1970821b827723"
+        ]
+      },
+      {
+        "photo": "enigme_carte/photo4.webp",
+        "reponses": [
+          "1b05f105d1ce7c",
+          "5c73e43be192f",
+          "673d399fd0ccf",
+          "8b3289d78cfd1"
+        ]
+      },
+      {
+        "reponses": [
+          "dee16afab53c9",
+          "12839676be8adf",
+          "13658ee13b4141",
+          "860ce38bc788f",
+          "92d79a1b5d0f7"
+        ]
+      },
+      {
+        "photo": "enigme_carte/photo5.webp",
+        "reponses": [
+          "11b6a245393ae9",
+          "1521a2caa6985d"
+        ]
+      },
+      {
+        "photo": "enigme_carte/photo3.jpg",
+        "reponses": [
+          "4a34e7c5cb0d7",
+          "192f223c228b28",
+          "2b541a9ece595"
+        ]
+      },
+      {
+        "photo": "enigme_carte/photo7.webp",
+        "reponses": [
+          "b4d076f1cd7a4",
+          "1e4bc038699d3",
+          "1783d26626c0c",
+          "63421fb95ac",
+          "47a1d10096127",
+          "19b27902cbe029",
+          "1043449e1c61ab"
+        ]
+      },
+      {
+        "reponses": [
+          "1ffec019698580",
+          "137fafd5fd6183",
+          "5fe84fc3d6cb1",
+          "13b9fe0d2a3cef",
+          "15d71db4035c20",
+          "1d912ae4f9539"
+        ]
+      },
+      {
+        "reponses": [
+          "193034ccb2ae05",
+          "f74bf8719c5d5",
+          "16489b6b4ee161",
+          "e3c6cacec2bbd"
+        ]
+      },
+      {
+        "reponses": [
+          "17824b39977ead",
+          "7424818f6b031",
+          "de9830931aecf"
+        ]
+      },
+      {
+        "reponses": [
+          "34af5429abda9",
+          "1c9139e4f5066b",
+          "19c864feeadf92",
+          "16b1884f093363",
+          "c882a749b778a",
+          "1b48237e61f1a5"
+        ]
+      }
     ]
   }
 }

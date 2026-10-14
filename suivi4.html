@@ -51,14 +51,20 @@
         Entrez et asseyez vous donc sur un banc.<br>
         Le trajet reprend après une pause fraîcheur</p>
       <button class="btn" id="btn-pause" type="button">Suite</button>
-      <div id="pause" data-delai="300" hidden>
-        <img class="photo" src="pause_parc.webp" alt="Pause au parc">
-        <button class="btn" id="btn-suite" type="button" hidden>Suite</button>
-      </div>
+      <button class="btn" id="btn-suite" type="button" data-delai="300" hidden>Suite</button>
     </div>
   </main>
 
   <footer>© 2026 FUN30</footer>
+
+  <!-- Affiché au clic sur le premier « Suite » -->
+  <div class="overlay" id="attente" hidden>
+    <div class="modale" role="dialog" aria-modal="true" aria-labelledby="attente-titre">
+      <h2 id="attente-titre">Revenez plus tard</h2>
+      <img class="photo" src="wait.JPG" alt="">
+      <button class="btn" type="button" data-fermer>OK</button>
+    </div>
+  </div>
 
   <script src="game.js"></script>
 </body>

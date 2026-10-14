@@ -151,6 +151,56 @@
     });
   }
 
+  // ---------- Carte : chaque saisie posée sur l'image (data-lieu = rang dans "lieux") attend
+  // le nom d'un lieu ; une bonne réponse verrouille la saisie et affiche la photo du lieu, s'il y en a une ----------
+  const plan = $('plan');
+  if (plan) {
+    const CLE_LIEUX = 'fun30_lieux_' + niveau;
+    let trouves = {};
+    try { trouves = JSON.parse(lire(CLE_LIEUX)) || {}; } catch (e) {}
+    const saisies = plan.querySelectorAll('[data-lieu]');
+    const popup = $('lieu');
+    let photos = [];
+
+    const majCompteur = () => {
+      $('compteur').textContent = Object.keys(trouves).length + ' lieux trouvés sur ' + saisies.length;
+    };
+    const montrerPhoto = (i) => {
+      if (!photos[i]) return;
+      $('lieu-photo').src = photos[i];
+      ouvrir(popup);
+    };
+    const verrouiller = (saisie, texte) => {
+      saisie.value = texte;
+      saisie.readOnly = true;
+      saisie.classList.add('trouve');
+    };
+    popup.addEventListener('click', (e) => { if (e.target === popup) fermer(popup); });
+
+    charger().then((cfg) => {
+      photos = cfg.lieux.map((l) => l.photo);
+      saisies.forEach((saisie) => {
+        const i = Number(saisie.dataset.lieu);
+        if (trouves[i] !== undefined) verrouiller(saisie, trouves[i]);
+        saisie.addEventListener('click', () => { if (saisie.readOnly) montrerPhoto(i); });
+        saisie.addEventListener('input', () => {
+          const texte = saisie.value.trim();
+          if (!cfg.lieux[i].reponses.includes(hash(norm(texte)))) return;
+          trouves[i] = texte;
+          ecrire(CLE_LIEUX, JSON.stringify(trouves));
+          verrouiller(saisie, texte);
+          saisie.blur();
+          majCompteur();
+          montrerPhoto(i);
+        });
+      });
+      majCompteur();
+    }).catch(() => {
+      erreur.textContent = "Impossible de charger enigmes.json. En local, lancez un petit serveur web au lieu d'ouvrir le fichier directement.";
+      erreur.classList.add('visible');
+    });
+  }
+
   if (!form) return;
 
   // Dernière énigme : un bloc #fin remplace le formulaire une fois l'énigme résolue
@@ -158,18 +208,16 @@
   const afficherFin = () => { form.closest('.carte').hidden = true; fin.hidden = false; };
   if (fin && debloque() > niveau) afficherFin();
 
-  // Pause chronométrée dans #fin : un premier bouton affiche la photo, puis un second bouton
+  // Pause chronométrée dans #fin : le premier bouton ouvre le popup #attente, puis un second bouton
   // (menant à la page suivante) n'apparaît qu'après data-delai secondes, même si on recharge la page.
   // La pause compte pour un niveau : la page suivante est au niveau + 2.
-  const pause = $('pause');
-  if (pause) {
+  const btnSuite = $('btn-suite');
+  if (btnSuite) {
     const CLE_PAUSE = 'fun30_pause_' + niveau;
     const btnPause = $('btn-pause');
-    const btnSuite = $('btn-suite');
     const demarrer = (debut) => {
       btnPause.hidden = true;
-      pause.hidden = false;
-      const reste = debut + Number(pause.dataset.delai) * 1000 - Date.now();
+      const reste = debut + Number(btnSuite.dataset.delai) * 1000 - Date.now();
       if (reste <= 0) btnSuite.hidden = false;
       else setTimeout(() => { btnSuite.hidden = false; }, reste);
     };
@@ -179,6 +227,7 @@
       const debut = Date.now();
       ecrire(CLE_PAUSE, debut);
       demarrer(debut);
+      ouvrir($('attente'));
     });
     btnSuite.addEventListener('click', async () => {
       try {
