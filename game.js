@@ -192,6 +192,7 @@
           saisie.blur();
           majCompteur();
           montrerPhoto(i);
+          if (Object.keys(trouves).length === saisies.length) ouvrir($('fin-jeu'));
         });
       });
       majCompteur();
