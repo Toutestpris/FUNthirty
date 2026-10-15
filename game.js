@@ -151,6 +151,49 @@
     });
   }
 
+  // ---------- Serpentins : rubans colorés qui tombent sur toute la page pendant quelques secondes ----------
+  const serpentins = () => {
+    const toile = document.createElement('canvas');
+    toile.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:30';
+    document.body.appendChild(toile);
+    const ctx = toile.getContext('2d');
+    const l = toile.width = window.innerWidth;
+    const h = toile.height = window.innerHeight;
+    const couleurs = ['#ffd200', '#003a70', '#e53935', '#43a047', '#1e88e5', '#ec407a', '#ff9800'];
+    const alea = (min, max) => min + Math.random() * (max - min);
+    const DUREE = 7000; // durée pendant laquelle de nouveaux serpentins apparaissent
+    const debut = performance.now();
+    let rubans = [];
+
+    const creer = () => ({
+      x: alea(0, l), y: alea(-40, -5), vy: alea(1.5, 3.5), t: alea(0, 6.28),
+      vt: alea(0.05, 0.12), amp: alea(1.5, 4), couleur: couleurs[Math.floor(Math.random() * couleurs.length)],
+      epaisseur: alea(3, 6), longueur: Math.floor(alea(25, 55)), trace: [],
+    });
+
+    const image = (maintenant) => {
+      ctx.clearRect(0, 0, l, h);
+      if (maintenant - debut < DUREE) for (let k = 0; k < 2; k++) rubans.push(creer());
+      rubans.forEach((r) => {
+        r.t += r.vt;
+        r.x += Math.sin(r.t) * r.amp;
+        r.y += r.vy;
+        r.trace.push([r.x, r.y]);
+        if (r.trace.length > r.longueur) r.trace.shift();
+        ctx.beginPath();
+        r.trace.forEach(([x, y], k) => (k ? ctx.lineTo(x, y) : ctx.moveTo(x, y)));
+        ctx.strokeStyle = r.couleur;
+        ctx.lineWidth = r.epaisseur;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+      });
+      rubans = rubans.filter((r) => r.trace[r.trace.length - 1][1] - r.longueur * r.vy < h);
+      if (rubans.length || maintenant - debut < DUREE) requestAnimationFrame(image);
+      else toile.remove();
+    };
+    requestAnimationFrame(image);
+  };
+
   // ---------- Carte : chaque saisie posée sur l'image (data-lieu = rang dans "lieux") attend
   // le nom d'un lieu ; une bonne réponse verrouille la saisie et affiche la photo du lieu, s'il y en a une ----------
   const plan = $('plan');
@@ -192,7 +235,10 @@
           saisie.blur();
           majCompteur();
           montrerPhoto(i);
-          if (Object.keys(trouves).length === saisies.length) ouvrir($('fin-jeu'));
+          if (Object.keys(trouves).length === saisies.length) {
+            // Un temps de pause, puis la fenêtre de fin et les serpentins
+            setTimeout(() => { ouvrir($('fin-jeu')); serpentins(); }, 5000);
+          }
         });
       });
       majCompteur();

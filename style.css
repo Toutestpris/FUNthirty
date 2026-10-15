@@ -205,6 +205,13 @@ main > p.compteur { text-align: center; }
 .plan input.lieu:focus { z-index: 2; box-shadow: 0 0 0 3px rgba(255, 210, 0, 0.8); }
 .plan input.lieu.trouve { color: #1b5e20; background: #d9f2dd; border-color: #2e7d32; cursor: pointer; }
 .modale .photo { margin-bottom: 16px; }
+.modale h2.bravo { margin: 0 0 16px; text-align: center; font-size: 34px; font-weight: 800; }
+.arc-en-ciel {
+  background: linear-gradient(90deg, #e53935, #ff9800, #fbc02d, #43a047, #1e88e5, #8e24aa, #ec407a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 
 /* ---------- Audio ---------- */
 audio { display: block; width: 100%; margin-bottom: 16px; }
