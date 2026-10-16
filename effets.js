@@ -86,10 +86,10 @@
       couleur: '#e53935', icone: '✊', deco: '<div class="s67">' + s67() + '</div>',
       fond: (f) => {
         const slogans = melanger([
-          'Plus de pauses café', 'Moins de partiels, plus de pizza', '6 7 !!!', 'Rendez-nous le week-end',
-          'Le Wi-Fi est un droit', 'Trentenaires en colère (et fatigués)', 'Mon dos fait crac, ma voix aussi',
-          'Une sieste obligatoire !', 'Retraite à 31 ans', 'Les copains d’abord', '67 ? 67 !',
-          'Grève du lundi matin', 'Sans apéro, pas de paix', 'Rendez-nous les croissants',
+          'ACAB', 'Les feux de poubelles, ça fait peur qu\' aux ordures', '6 7 !!!', 'J\'ai mis plus de budget dans ma pancarte que l\état dans nos études',
+          'Le Wi-Fi est un droit', 'La jeunesse vise le BAC 🔫 la BAC vise la tête', 'L\état nous la met à l\'envers, on lui mai 68',
+          'La dépression c\'est un critère sur PARCOURSUP ?!', 'CRS MONTRE TES FESSES', '1 Prof pour 35 élèves, 5 CRS pour un élève !', '67 ? 67 !',
+          'Difficile de passer le BAC avec une main en moins', 'Trop jeunes pour voter, assez jeune pour être gazer',
         ]);
         const couleurs = ['#ffffff', '#fff59d', '#ffccbc', '#b3e5fc', '#c8e6c9', '#f8bbd0'];
         const n = petit ? 7 : 11;
@@ -112,7 +112,7 @@
         // Banderole qui défile sous le bandeau
         const hero = document.querySelector('.hero');
         if (hero && !document.querySelector('.banderole')) {
-          const txt = 'Grève générale des trentenaires ✊ Du pain, des jeux, des partiels annulés ✊ 6 7 6 7 6 7 ✊ ';
+          const txt = 'Grève générale du 17/10 ✊ NIK l\'état ✊ 6 7 6 7 6 7 ✊ ';
           hero.after(el('div', 'banderole', '<div>' + txt + txt + txt + '</div>'));
         }
       },
@@ -361,22 +361,37 @@
 
   // ---------- Écran noir : la bonne réponse « temple » (étape 1 de la page niveau 2) plonge tout dans le noir ----------
   const CLE_NOIR = 'fun30_noir';
-  const DUREE_NOIR = 30000;
+  const DUREE_NOIR = 20000;
+  const BOUTON_NOIR = 5000; // le bouton « Fermer » apparaît au bout de 5 s
   const noir = (finTs) => {
     if (document.querySelector('.noir')) return;
     const voile = el('div', 'noir', '<p>Bismillah, c’est les ténèbres</p>');
     voile.setAttribute('aria-live', 'polite');
+    const bouton = el('button', 'noir-fermer', 'Fermer ✕');
+    bouton.type = 'button';
+    bouton.hidden = true;
+    voile.append(bouton);
     const zones = document.querySelectorAll('header.main, main, footer, .overlay');
     zones.forEach((z) => { z.inert = true; });
     if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
     body.append(voile);
     document.documentElement.style.overflow = 'hidden';
-    setTimeout(() => {
+    let fini = false;
+    const lever = () => {
+      if (fini) return;
+      fini = true;
+      clearTimeout(minuteur);
+      clearTimeout(minuteurBouton);
+      ecrire(CLE_NOIR, 0);
       zones.forEach((z) => { z.inert = false; });
       document.documentElement.style.overflow = '';
       voile.classList.add('sort');
       setTimeout(() => voile.remove(), 1600);
-    }, Math.max(0, finTs - Date.now()));
+    };
+    const minuteur = setTimeout(lever, Math.max(0, finTs - Date.now()));
+    const minuteurBouton = setTimeout(() => { bouton.hidden = false; bouton.focus(); },
+      Math.max(0, finTs - DUREE_NOIR + BOUTON_NOIR - Date.now()));
+    bouton.addEventListener('click', lever);
   };
   // Le noir survit au rechargement de la page : on mémorise l'heure de fin
   const finNoir = Number(lire(CLE_NOIR));

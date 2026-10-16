@@ -912,18 +912,33 @@ body[data-theme="route"] .hero::after {
   margin: 0;
   max-width: 560px;
   font: 700 clamp(24px, 6vw, 44px)/1.3 Georgia, "Times New Roman", serif;
-  color: #3b3b3b;
-  text-shadow: 0 0 18px #2a0000;
+  color: #fff;
+  text-shadow: 0 0 22px rgba(255, 255, 255, 0.35);
   animation: noir-texte 4.5s ease-in-out infinite;
 }
+.noir-fermer {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  padding: 10px 16px;
+  font: 600 15px/1 system-ui, sans-serif;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  cursor: pointer;
+  animation: noir-entre 0.6s ease both;
+}
+.noir-fermer:hover, .noir-fermer:focus-visible { background: rgba(255, 255, 255, 0.25); outline: none; }
+.noir-fermer[hidden] { display: none; }
 @keyframes noir-entre { from { opacity: 0; } to { opacity: 1; } }
 @keyframes noir-sort { from { opacity: 1; } to { opacity: 0; } }
 @keyframes noir-texte {
-  0%, 100% { opacity: 0.25; }
-  18% { opacity: 0.95; }
-  22% { opacity: 0.1; }
-  26% { opacity: 0.8; }
-  60% { opacity: 0.45; }
+  0%, 100% { opacity: 0.9; }
+  18% { opacity: 1; }
+  22% { opacity: 0.55; }
+  26% { opacity: 1; }
+  60% { opacity: 0.8; }
 }
 
 /* ---------- Accessibilité : mouvements réduits ---------- */
