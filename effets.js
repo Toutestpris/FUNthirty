@@ -87,7 +87,7 @@
       fond: (f) => {
         const slogans = melanger([
           'ACAB', 'Les feux de poubelles, ça fait peur qu\' aux ordures', '6 7 !!!', 'J\'ai mis plus de budget dans ma pancarte que l\état dans nos études',
-          'Le Wi-Fi est un droit', 'La jeunesse vise le BAC 🔫 la BAC vise la tête', 'L\état nous la met à l\'envers, on lui mai 68',
+          'Le Wi-Fi est un droit', 'La jeunesse vise le BAC 🔫 la BAC vise la tête', 'L\'état nous la met à l\'envers, on lui mai 68',
           'La dépression c\'est un critère sur PARCOURSUP ?!', 'CRS MONTRE TES FESSES', '1 Prof pour 35 élèves, 5 CRS pour un élève !', '67 ? 67 !',
           'Difficile de passer le BAC avec une main en moins', 'Trop jeunes pour voter, assez jeune pour être gazer',
         ]);
