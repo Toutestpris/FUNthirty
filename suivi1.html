@@ -12,7 +12,7 @@
     } catch (e) { location.replace('index.html'); }
   </script>
 </head>
-<body data-niveau="2">
+<body data-theme="manif" data-niveau="2">
 
   <header class="main">
     <div class="wrap">
@@ -35,7 +35,7 @@
       <form id="reponse" autocomplete="off" novalidate>
         <label for="champ">Nom de la rue</label>
         <div class="reponse-ligne">
-          <input type="text" id="champ" name="reponse" placeholder="Votre réponse">
+          <input type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" id="champ" name="reponse" placeholder="Votre réponse">
           <button class="btn" type="submit">Valider</button>
         </div>
         <div class="erreur" id="erreur" role="alert"></div>
@@ -46,5 +46,6 @@
   <footer>© 2026 FUN30</footer>
 
   <script src="game.js"></script>
+  <script src="effets.js"></script>
 </body>
 </html>

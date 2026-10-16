@@ -6,7 +6,7 @@
   <title>FUN30</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body data-niveau="1" data-intro>
+<body data-theme="colis" data-niveau="1" data-intro>
 
   <header class="main">
     <div class="wrap">
@@ -43,7 +43,7 @@
       <form id="reponse" autocomplete="off" novalidate>
         <label for="champ">Quel est le prochain lieu ?</label>
         <div class="reponse-ligne">
-          <input type="text" id="champ" name="reponse" placeholder="Votre réponse">
+          <input type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" id="champ" name="reponse" placeholder="Votre réponse">
           <button class="btn" type="submit">Valider</button>
         </div>
         <div class="erreur" id="erreur" role="alert"></div>
@@ -57,6 +57,7 @@
   <div class="overlay" id="popup" hidden>
     <div class="modale" role="dialog" aria-modal="true" aria-labelledby="popup-titre">
       <button class="croix" type="button" data-fermer aria-label="Fermer">&times;</button>
+      <div class="modale-icone" aria-hidden="true"><span>🚚</span></div>
       <h2 id="popup-titre">Information importante</h2>
       <p>Trop grand nombre de trentenaires détectés, Colissimou ne peut pas prendre en charge autant de Séniors. Procédure FUN30 engagée, le colis est déplacé à un lieu mystère qui assurera une bonne soirée.</p>
     </div>
@@ -74,5 +75,6 @@
   </div>
 
   <script src="game.js"></script>
+  <script src="effets.js"></script>
 </body>
 </html>

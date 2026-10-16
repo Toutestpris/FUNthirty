@@ -27,6 +27,37 @@
 
   const $ = (id) => document.getElementById(id);
 
+  // ---------- Retours visuels (décors et ambiances : voir effets.js) ----------
+  const emettre = (nom, detail) => document.dispatchEvent(new CustomEvent('fun30:' + nom, { detail }));
+  const attendre = (ms) => new Promise((r) => setTimeout(r, ms));
+  const MESSAGES_OK = ['Bonne réponse ! 🎉', 'Bravo, c’est ça ! ✨', 'Exactement ! 👏', 'Dans le mille ! 🎯'];
+  const toast = (texte) => {
+    document.querySelectorAll('.toast').forEach((t) => t.remove());
+    const t = document.createElement('div');
+    t.className = 'toast';
+    t.setAttribute('role', 'status');
+    t.textContent = texte;
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 2300);
+  };
+  const secouer = (el) => {
+    el.classList.remove('secoue');
+    void el.offsetWidth;
+    el.classList.add('secoue');
+  };
+  // Retour arrière (cache du navigateur) : on remet la page dans son état normal
+  window.addEventListener('pageshow', (e) => {
+    if (!e.persisted) return;
+    document.body.classList.remove('sortie');
+    document.querySelectorAll('#reponse button, #reponse input').forEach((c) => { c.disabled = false; });
+  });
+  // Fondu de sortie avant de changer de page
+  const aller = async (url) => {
+    document.body.classList.add('sortie');
+    await attendre(450);
+    location.href = url;
+  };
+
   // ---------- Hash simple (cyrb53) : les réponses ne sont pas en clair dans le JSON ----------
   const hash = (str, seed = 0) => {
     let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
@@ -144,7 +175,7 @@
       try {
         const cfg = await charger();
         ecrire(CLE_NIVEAU, Math.max(debloque(), niveau + 1));
-        location.href = cfg.suivant;
+        aller(cfg.suivant);
       } catch (err) {
         alert("Impossible de charger enigmes.json. En local, lancez un petit serveur web au lieu d'ouvrir le fichier directement.");
       }
@@ -154,7 +185,7 @@
   // ---------- Serpentins : rubans colorés qui tombent sur toute la page pendant quelques secondes ----------
   const serpentins = () => {
     const toile = document.createElement('canvas');
-    toile.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:30';
+    toile.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:45';
     document.body.appendChild(toile);
     const ctx = toile.getContext('2d');
     const l = toile.width = window.innerWidth;
@@ -280,7 +311,7 @@
       try {
         const cfg = await charger();
         ecrire(CLE_NIVEAU, Math.max(debloque(), niveau + 2));
-        location.href = cfg.suivant;
+        aller(cfg.suivant);
       } catch (err) {
         alert("Impossible de charger enigmes.json. En local, lancez un petit serveur web au lieu d'ouvrir le fichier directement.");
       }
@@ -326,16 +357,30 @@
         ? cfg.erreur || "Ce n'est pas la bonne rue. Regardez bien la photo et allez la chercher sur place."
         : "Ce n'est pas la bonne réponse. Relisez les indices ou demandez de l'aide avec le bouton « ? ».";
       erreur.classList.add('visible');
+      secouer(form.querySelector('.reponse-ligne'));
+      if (navigator.vibrate) navigator.vibrate(150);
       return;
     }
 
+    // Bonne réponse : petit retour visuel, puis étape suivante / page suivante
+    const carte = form.closest('.carte');
+    carte.classList.add('reussi');
+    setTimeout(() => carte.classList.remove('reussi'), 1200);
+    toast(MESSAGES_OK[Math.floor(Math.random() * MESSAGES_OK.length)]);
+
     if (etapes && etapeCourante() + 1 < etapes.length) {
-      ecrire(CLE_ETAPE, etapeCourante() + 1);
+      const resolue = etapeCourante();
+      ecrire(CLE_ETAPE, resolue + 1);
+      emettre('etape', { niveau, etape: resolue });
       afficherEtape(cfg);
       return;
     }
     ecrire(CLE_NIVEAU, Math.max(debloque(), niveau + 1));
     if (fin) afficherFin();
-    else location.href = cfg.suivant;
+    else {
+      form.querySelectorAll('button, input').forEach((c) => { c.disabled = true; });
+      await attendre(1000);
+      aller(cfg.suivant);
+    }
   });
 })();
